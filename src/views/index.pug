@@ -1,0 +1,38 @@
+doctype html
+html
+  head
+    title Featured Add-ons Compatibility Test
+    link(rel='stylesheet' href='styles/tabzilla.css')
+    link(rel='stylesheet' href='styles/style.css')
+    script(src='scripts/script.js')
+  body
+    div#page
+        div#header
+            div#header-inner
+                div#tabzilla
+                    a(href='https://www.mozilla.org') Mozilla
+                div#masthead-wrapper
+                    div#masthead
+                        h1 #[img(src='images/puzzle.png')] Featured Add-ons Compatibility Test
+        div#content
+            - var href = addon_url;
+            div.large_text Please create a new Firefox profile #[sup #[a(href='https://activate.mozilla.community/experiments/e10s-addons/#steps-to-test' target='blank') ?]] and test
+            input(id='addon_url' type='text' value=addon_url readonly size='60' onclick='this.select()')
+            span#clipboard-wrapper
+                img(id='clipboard_btn' src='images/clipboard.png' title='Copy to clipboard')
+                span#copied_confirmation Copied!
+            form(id='submit_form' method='post')
+                p
+                    strong Is the tested version working correctly in multiprocess Firefox?
+                    br
+                    label #[input(name='compatible' type='radio' value='1' class=is_error ? 'error' : false)] yes
+                    br
+                    label #[input(name='compatible' type='radio' value='0' class=is_error ? 'error' : false)] no
+                p Any Comments? (optional)
+                    br
+                    textarea(name='comment' rows='7' cols='87') #{comment}
+                input(name='addon_url' type='hidden' value=href)
+                input(type='submit' value='Submit')
+            p.
+                More information at #[a(href='https://activate.mozilla.community/experiments/e10s-addons/' target='blank') activate.mozilla.com] |
+                Code for this web page at #[a(href='https://github.com/mozilla/featured-addons-compatibility-test' target='blank') GitHub]

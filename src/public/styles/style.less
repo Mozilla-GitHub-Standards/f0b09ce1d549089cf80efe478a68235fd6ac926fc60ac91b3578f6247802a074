@@ -1,0 +1,179 @@
+// Colors
+@primary-blue: rgba(12, 153, 213, 1);
+@primary-link: #6ac3e2;
+@primary-font: 'Open Sans', X-LocaleSpecific, sans-serif;
+@link-on-white-bg: #0996F8;
+@link-on-color-bg: #fff;
+@header-font-color: #c63717;
+@default-font-color: #333;
+// Common styles
+@detail-border: 1px solid #ebebeb;
+// Sizes
+@containerWidth: 1018px;
+@pageWidth: 960px;
+
+// Fonts
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Open Sans'), local('OpenSans'), url('../fonts/OpenSans-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Open Sans Bold'), local('OpenSans-Bold'), url('../fonts/OpenSans-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 700;
+    src: local('Open Sans BoldItalic'), local('OpenSans-BoldItalic'), url('../fonts/OpenSans-BoldItalic.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 400;
+    src: local('Open Sans Italic'), local('OpenSans-Italic'), url('../fonts/OpenSans-Italic.ttf') format('truetype');
+}
+h1, h2, h3, h4, h5 {
+    line-height: 1.5;
+    font-family: @primary-font;
+    font-style: normal;
+    font-weight: normal;
+}
+* {
+    font-family: @primary-font;
+}
+body {
+    background: #fff none repeat scroll 0 0;
+    color: @default-font-color;
+    font-family: @primary-font;
+    font-style: normal;
+    line-height: 1.5;
+    min-width: @containerWidth;
+    margin: 0 auto;
+}
+.error {
+    box-shadow: 0 0 5px red;
+    border: 1px solid rgba(255, 0, 0, 0.75);
+}
+a, a:link, a:visited, a:hover, a:focus, a:active {
+    color: @link-on-white-bg;
+}
+input[type="submit"] {
+    background: #5784bf;
+    border: none;
+    border-radius: 3px;
+    box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.10), inset 0 -2px 0 0 rgba(0, 0, 0, 0.10);
+    box-sizing: border-box;
+    color: #fff;
+    font-family: @primary-font;
+    font-size: 1rem;
+    height: auto;
+    line-height: 1.5;
+    padding: 8px 14px 9px;
+    position: relative;
+    text-shadow: none;
+    transition: box-shadow linear 0.25s;
+    font-weight: 700;
+    margin: 0;
+    display: inline-block;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &.selected, &:hover, &:focus {
+        box-shadow: 0 2px rgba(0, 0, 0, 0.1), inset 0 -2px rgba(0, 0, 0, 0.1), inset 0 0 100px rgba(255, 255, 255, 0.2);
+    }
+    &:active {
+        top: 2px;
+        box-shadow: none;
+    }
+}
+#page {
+    width: @pageWidth;
+    max-width: 75em;
+    margin: 0 auto;
+
+    #header {
+        background-color: @primary-blue;
+        background-position: 0 416px, 0 0, 0 0;
+        // This breaks the background panel wrapper out of the containing box, // allowing it to be full-width. This means the background gradient can
+        // span the entire width of the viewport, even though the parent has a
+        // max-width.
+        margin: 0 0 12px ~"calc(-1 * ((100vw - 100%) / 2))";
+        min-width: @containerWidth;
+        width: 100vw;
+
+        #header-inner {
+            margin: 0 auto;
+            max-width: @pageWidth;
+            min-height: 130px;
+
+            #masthead-wrapper {
+                #masthead {
+                    padding-top: 5px;
+                    color: @link-on-color-bg;
+
+                    h1 {
+                        font-size: 48px;
+                        padding-bottom: 20px;
+                        text-align: center;
+
+                        img {
+                            vertical-align: middle;
+                        }
+                    }
+                }
+                &::after {
+                    clear: both;
+                    content: "";
+                    display: block;
+                    height: 0px;
+                    width: 100%;
+                }
+            }
+        }
+    }
+    #content {
+        margin-left: 60px;
+        margin-right: 60px;
+
+        .large_text {
+            font-size: 20px;
+            padding-bottom: 5px;
+        }
+
+        #addon_url {
+            font-size: 18px;
+        }
+
+        #clipboard-wrapper {
+            position: relative;
+
+            #clipboard_btn {
+                padding: 8px;
+                border: 1px solid rgb(229,229,229);
+                border-left: 0;
+                vertical-align: bottom;
+                cursor: pointer;
+            }
+            #copied_confirmation {
+                font-size: 12px;
+                position: absolute;
+                top: 27px;
+                left: -9px;
+                background-color: @primary-blue;
+                color: @link-on-color-bg;
+                padding: 2px 4px 2px 4px;
+                opacity: 0;
+                border-radius: 2px;
+            }
+        }
+
+        #submit_form {
+            margin-top: 35px;
+        }
+    }
+}
