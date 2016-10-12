@@ -2,10 +2,11 @@ const dbPool = require('./db');
 const Addon = require('./addon.js');
 
 class AddonReport extends Addon {
-    constructor(url, is_compatible, comment) {
+    constructor(url, is_compatible, comment, session) {
         super(url);
         this.is_compatible = is_compatible;
         this.comment = comment;
+        this.session = session;
     }
 
     async save() {
@@ -16,9 +17,9 @@ class AddonReport extends Addon {
         if (result && result.id) {
             let version = await this.getCurrentVersion();
             dbPool.query(
-                `INSERT INTO results (addon_id, version, compatible, comment)
-                 VALUES ($1, $2, $3, $4);`,
-                [parseInt(result.id, 10), version, this.is_compatible, this.comment]
+                `INSERT INTO test.results (addon_id, version, compatible, comment, session)
+                 VALUES ($1, $2, $3, $4, $5);`,
+                [parseInt(result.id, 10), version, this.is_compatible, this.comment, this.session]
             );
         }
     }
