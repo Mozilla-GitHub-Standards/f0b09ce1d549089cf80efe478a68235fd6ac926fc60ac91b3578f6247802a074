@@ -17,7 +17,7 @@ class AddonReport extends Addon {
         if (result && result.id) {
             let version = await this.getCurrentVersion();
             dbPool.query(
-                `INSERT INTO test.results (addon_id, version, compatible, comment, session)
+                `INSERT INTO results (addon_id, version, compatible, comment, session)
                  VALUES ($1, $2, $3, $4, $5);`,
                 [parseInt(result.id, 10), version, this.is_compatible, this.comment, this.session]
             );
