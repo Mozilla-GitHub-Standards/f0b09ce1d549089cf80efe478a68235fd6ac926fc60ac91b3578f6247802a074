@@ -1,0 +1,7 @@
+{
+    "script": ".",
+    "command": "npm run dev",
+    "killTree": true,
+    "watch": true,
+    "watchDirectory": "./src/"
+}
