@@ -20,43 +20,51 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+const DISABLED = true;
+
 const wrap = fn => (...args) => fn(...args).catch(args[2]);
 
 app.get('/', wrap(async(req, res) => {
-    let cookies = req.cookies;
-    if (!cookies || !cookies.s) {
-        let opts = { maxAge : 2592000000 };
-        res.cookie('s', Math.random().toString(36).slice(2), opts);
-    }
-    try {
-        let addonUrl = await Addon.getLeastTestedAddon();
-        res.render('index', {
-            addon_url: addonUrl
-        });
-    } catch (err) {
-        console.log(err);
+    if (!DISABLED) {
+        let cookies = req.cookies;
+        if (!cookies || !cookies.s) {
+            let opts = { maxAge : 2592000000 };
+            res.cookie('s', Math.random().toString(36).slice(2), opts);
+        }
+        try {
+            let addonUrl = await Addon.getLeastTestedAddon();
+            res.render('index', {
+                addon_url: addonUrl
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    } else {
+        res.render('index');
     }
 }));
 
 app.post('/', wrap(async(req, res) => {
     try {
-        let params = req.body;
-        if (params) {
-            let addonUrl = params.addon_url;
-            if (addonUrl) {
-                let compatible = params.compatible;
-                let comment = params.comment;
-                if (!compatible) {
-                    res.render('index', {
-                        is_error: true,
-                        addon_url: addonUrl,
-                        comment: comment
-                    });
-                    return;
-                } else {
-                    let cookies = req.cookies;
-                    let session = (cookies && cookies.s) ? cookies.s : 0;
-                    await new AddonReport(addonUrl, compatible, comment, session).save();
+        if (!DISABLED) {
+            let params = req.body;
+            if (params) {
+                let addonUrl = params.addon_url;
+                if (addonUrl) {
+                    let compatible = params.compatible;
+                    let comment = params.comment;
+                    if (!compatible) {
+                        res.render('index', {
+                            is_error: true,
+                            addon_url: addonUrl,
+                            comment: comment
+                        });
+                        return;
+                    } else {
+                        let cookies = req.cookies;
+                        let session = (cookies && cookies.s) ? cookies.s : 0;
+                        await new AddonReport(addonUrl, compatible, comment, session).save();
+                    }
                 }
             }
         }
